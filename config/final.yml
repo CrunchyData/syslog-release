@@ -1,6 +1,6 @@
 ---
 blobstore:
-  provider: s3
+  provider: local
   options:
-    bucket_name: syslog-release-blobs
+    blobstore_path: ./blobs
 final_name: syslog
