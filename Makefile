@@ -145,7 +145,7 @@ ifeq ($(BOSH_CLI_VERSION), 1)
 endif
 
 vendor:
-	git clone https://github.com/bosh-packages/golang-release $(CURDIR)/src/golang-release
+	@$(GIT_CMD) clone https://github.com/bosh-packages/golang-release $(CURDIR)/src/golang-release
 	@$(BOSH_CMD) vendor-package golang-1-linux ./src/golang-release
 
 

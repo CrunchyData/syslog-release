@@ -18,7 +18,7 @@ CF_URL ?= https://api.local.pcfdev.io
 RELEASE_VERSION ?= 11.3.2.01
 TEMPLATE_STUBS ?=
 TILE_VERSION ?= $(RELEASE_VERSION)
-
+GIT_CMD ?= $(shell which git)
 ## System Vars
 #
 # These should be standard across all environments
