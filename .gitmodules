@@ -1,4 +1,4 @@
-[submodule "src/github.com/cloudfoundry/blackbox"]
-	path = src/github.com/cloudfoundry/blackbox
+[submodule "src/github.com/CrunchyData/blackbox"]
+	path = src/github.com/CrunchyData/blackbox
 	url = https://github.com/CrunchyData/blackbox.git
-        branch = feature/po_suffix_watch
+        branch = feature/po_suffix_watch2

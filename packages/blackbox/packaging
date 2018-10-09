@@ -4,4 +4,4 @@ source /var/vcap/packages/golang-1-linux/bosh/compile.env
 mkdir ../src && cp -a * ../src && mv ../src ./src
 mkdir $BOSH_INSTALL_TARGET/bin
 
-go build -o $BOSH_INSTALL_TARGET/bin/blackbox src/github.com/cloudfoundry/blackbox/cmd/blackbox/main.go
+go build -o $BOSH_INSTALL_TARGET/bin/blackbox src/github.com/CrunchyData/blackbox/cmd/blackbox/main.go
