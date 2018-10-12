@@ -8,11 +8,11 @@ include Makefile-pcf.mk
 
 .PHONY: all clean dev build status login target showvars
 
-all: status login target vms build
+all: status login target build
 
 clean: bosh-cleanup remove-releases
 
-dev: status login target vms build-dev
+dev: status login target build-dev
 
 final: all tarball
 
@@ -49,10 +49,10 @@ else
 	@$(BOSH_CMD) -e $(BOSH_ENV) delete-release $(DEPLOYMENT_NAME) --force
 endif
 
-build: pre-build tarball spruce stemcell
+build: tarball spruce 
 ifndef SKIPUPLOAD
 ifeq ($(BOSH_CLI_VERSION), 1)
-	@$(BOSH_CMD) upload release $(shell \ls -t releases/syslog-pglog-*.tgz | head -1)
+	@$(BOSH_CMD) upload release $(shell \ls -t releases/$(DEPLOYMENT_NAME)/syslog-pglog-*.tgz | head -1)
 	@$(BOSH_CMD) deployment $(DEPLOYMENT_MANIFEST)
 	@$(BOSH_CMD) -n deploy
 else
@@ -61,11 +61,10 @@ else
 endif
 endif
 
-build-dev: pre-build tarball-dev spruce stemcell
+build-dev: tarball-dev spruce 
 ifndef SKIPUPLOAD
 ifeq ($(BOSH_CLI_VERSION), 1)
-	@$(BOSH_CMD) upload release $(shell \ls -t dev_releases/syslog-pglog-*
-.tgz | head -1)
+	@$(BOSH_CMD) upload release $(shell \ls -t dev_releases/$(DEPLOYMENT_NAME)/syslog-pglog-*.tgz | head -1)
 	@$(BOSH_CMD) deployment $(DEPLOYMENT_MANIFEST)
 	@$(BOSH_CMD) -n deploy --no-redact
 else
@@ -127,7 +126,7 @@ endif
 
 tarball:
 ifeq ($(BOSH_CLI_VERSION), 1)
-        yes | $(BOSH_CMD) create release --final --with-tarball --force --name "$(DEPLOYMENT_NAME)" --version "$(RELEASE_VERSION)"
+	yes | $(BOSH_CMD) create release --final --with-tarball --force --name "$(DEPLOYMENT_NAME)" --version "$(RELEASE_VERSION)"
 else
 	$(BOSH_CMD) -e $(BOSH_ENV) -n create-release --final --force --name=$(DEPLOYMENT_NAME) --version=$(RELEASE_VERSION) --tarball=$(RELEASE_TARBALL)
 endif

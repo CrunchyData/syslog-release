@@ -24,7 +24,7 @@ GIT_CMD ?= $(shell which git)
 # These should be standard across all environments
 
 SHELL = /bin/bash
-BOSH_CMD = $(BOSH_PATH)/bosh
+BOSH_CMD = $(BOSH_PATH)/bosh1
 BOSH_CLIENT = admin
 BOSH_CLIENT_SECRET = $(shell \$(BOSH_CMD) int $(BOSH_CREDS_FILE) --path /admin_password)
 SPRUCE = $(shell which spruce)
