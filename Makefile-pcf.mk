@@ -15,10 +15,11 @@ CF_SPACE ?= space
 CF_USERNAME ?= admin
 CF_PASSWORD ?= admin
 CF_URL ?= https://api.local.pcfdev.io
-RELEASE_VERSION ?= 11.3.2.01
+RELEASE_VERSION ?= 11.3.2.4
 TEMPLATE_STUBS ?=
 TILE_VERSION ?= $(RELEASE_VERSION)
 GIT_CMD ?= $(shell which git)
+GO_CMD ?= $(shell which go)
 ## System Vars
 #
 # These should be standard across all environments
@@ -28,12 +29,6 @@ BOSH_CMD = $(BOSH_PATH)/bosh1
 BOSH_CLIENT = admin
 BOSH_CLIENT_SECRET = $(shell \$(BOSH_CMD) int $(BOSH_CREDS_FILE) --path /admin_password)
 SPRUCE = $(shell which spruce)
-MANIFESTS_DIR = $(CURDIR)/manifests
-TEMPLATES_DIR = $(CURDIR)/templates
-TEMPLATE_STUBS_DIR = $(TEMPLATES_DIR)/stubs
-CLOUD_CONFIG = $(MANIFESTS_DIR)/bosh-lite-cloud-config.yml
-DEPLOYMENT_MANIFEST = $(MANIFESTS_DIR)/bosh-lite-manifest.yml
-DEPLOYMENT_MANIFEST_TEMPLATE = $(TEMPLATES_DIR)/bosh-lite-template.yml
 DEV_RELEASE_TARBALL = $(CURDIR)/dev_releases/$(DEPLOYMENT_NAME)/$(DEPLOYMENT_NAME)-latest.tgz
 RELEASE_TARBALL = $(CURDIR)/releases/$(DEPLOYMENT_NAME)/$(DEPLOYMENT_NAME)-$(RELEASE_VERSION).tgz
 

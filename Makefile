@@ -8,11 +8,11 @@ include Makefile-pcf.mk
 
 .PHONY: all clean dev build status login target showvars
 
-all: status login target build
+all: status login target build 
 
 clean: bosh-cleanup remove-releases
 
-dev: status login target build-dev
+dev: status login target build-dev 
 
 final: all tarball
 
@@ -29,6 +29,7 @@ rebuild-dev: clean dev
 test: all broker-registrar 
 
 test-dev: dev broker-registrar 
+
 
 ## Interstitial Targets
 #
@@ -49,27 +50,25 @@ else
 	@$(BOSH_CMD) -e $(BOSH_ENV) delete-release $(DEPLOYMENT_NAME) --force
 endif
 
-build: tarball spruce 
+build: build-blackbox tarball 
 ifndef SKIPUPLOAD
 ifeq ($(BOSH_CLI_VERSION), 1)
 	@$(BOSH_CMD) upload release $(shell \ls -t releases/$(DEPLOYMENT_NAME)/syslog-pglog-*.tgz | head -1)
-	@$(BOSH_CMD) deployment $(DEPLOYMENT_MANIFEST)
-	@$(BOSH_CMD) -n deploy
 else
 	@$(BOSH_CMD) -e $(BOSH_ENV) upload-release $(RELEASE_TARBALL)
-	@$(BOSH_CMD) -e $(BOSH_ENV) -d $(DEPLOYMENT_NAME) -n deploy $(DEPLOYMENT_MANIFEST)
 endif
 endif
 
-build-dev: tarball-dev spruce 
+build-blackbox: 
+	mkdir -p src/blackbox
+	GOPATH=$(CURDIR) GOOS=linux GOARCH=amd64 $(GO_CMD) build -o src/blackbox/blackbox-linux64 src/github.com/CrunchyData/blackbox/cmd/blackbox/main.go
+
+build-dev: build-blackbox tarball-dev 
 ifndef SKIPUPLOAD
 ifeq ($(BOSH_CLI_VERSION), 1)
 	@$(BOSH_CMD) upload release $(shell \ls -t dev_releases/$(DEPLOYMENT_NAME)/syslog-pglog-*.tgz | head -1)
-	@$(BOSH_CMD) deployment $(DEPLOYMENT_MANIFEST)
-	@$(BOSH_CMD) -n deploy --no-redact
 else
 	@$(BOSH_CMD) -e $(BOSH_ENV) upload-release $(DEV_RELEASE_TARBALL)
-	@$(BOSH_CMD) -e $(BOSH_ENV) -d $(DEPLOYMENT_NAME) -n deploy --no-redact $(DEPLOYMENT_MANIFEST)
 endif
 endif
 
@@ -110,12 +109,6 @@ remove-releases:
 
 remove-files:
 	@find $(CURDIR)/src -type f \( -iname '*t*gz' -o -iname '*zip' -o -iname '*deb' -o -iname '*bz2' \) -delete
-
-## Review spruce and make changes.
-spruce:
-ifndef SKIPUPLOAD
-	@$(SPRUCE) merge --prune config $(DEPLOYMENT_MANIFEST_TEMPLATE) $(TEMPLATE_STUBS_DIR)/global.yml $(TEMPLATE_STUBS) > $(DEPLOYMENT_MANIFEST)
-endif
 
 status:
 ifeq ($(BOSH_CLI_VERSION), 1)
