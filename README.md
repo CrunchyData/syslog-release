@@ -1,5 +1,5 @@
 # Syslog BOSH Release
-# This has been modified to forward pg_log prefix. 
+**This has been modified to configure the log suffix and not specifically logs ending with pg_log.**
 * Slack: #syslog on <https://slack.cloudfoundry.org>
 * Tracker: [CF Platform Logging Improvements][tracker]
 * CI Pipelines: https://syslog.ci.cf-app.com
@@ -24,9 +24,7 @@ to accomplish this on Windows stemcells,
 which uses blackbox, but not rsyslog.
 
 ## Usage
-If you looking for the original release.
-You can find it from [bosh.io][syslog-bosh-io]
-and include it in your manifest:
+If you looking for the original release, you can find it from [bosh.io][syslog-bosh-io] and include it in your manifest.
 
 ```yml
 releases:
@@ -253,7 +251,7 @@ The current version of rsyslog does not sufficiently support wildcards
 for our use-case, but it may be worth further exploring in the future.
 
 ## Development
-# Skip the submodule update. This will overwrite the modified blackbox.
+**Skip the submodule update. This will overwrite the modified blackbox.**
 In order to build releases or run tests,
 you will need to initialize and update the blackbox submodule:
 ```
