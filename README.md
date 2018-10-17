@@ -1,5 +1,5 @@
 # Syslog BOSH Release
-**This has been modified to configure the log suffix and not specifically logs ending with pg_log.**
+# This has been modified to forward logs without the dot in the suffix.
 * Slack: #syslog on <https://slack.cloudfoundry.org>
 * Tracker: [CF Platform Logging Improvements][tracker]
 * CI Pipelines: https://syslog.ci.cf-app.com
@@ -24,7 +24,7 @@ to accomplish this on Windows stemcells,
 which uses blackbox, but not rsyslog.
 
 ## Usage
-If you looking for the original release, you can find it from [bosh.io][syslog-bosh-io] and include it in your manifest.
+If you are looking for the original release, you can download it from [bosh.io][syslog-bosh-io] and include it in your manifest.
 
 ```yml
 releases:
@@ -51,11 +51,8 @@ Configure `address` and,
 optionally,
 `port` and `transport`:
 
-### Configure Log_prfix
+### Configure Log_suffix
 Add the [`log_suffix`]
-to allow a different log suffix to be forwarded by blackbox.
-The default value is "log". 
-Which will forwarding both system and postgresql logs. 
 
 ```yml
 instance_groups:
