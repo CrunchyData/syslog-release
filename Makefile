@@ -60,6 +60,7 @@ endif
 endif
 
 build-blackbox: 
+	git submodule update --init --recursive
 	mkdir -p src/blackbox
 	GOPATH=$(CURDIR) GOOS=linux GOARCH=amd64 $(GO_CMD) build -o src/blackbox/blackbox-linux64 src/github.com/CrunchyData/blackbox/cmd/blackbox/main.go
 
@@ -135,9 +136,4 @@ target:
 ifeq ($(BOSH_CLI_VERSION), 1)
 	@$(BOSH_CMD) target $(BOSH_TARGET)
 endif
-
-vendor:
-	@$(GIT_CMD) clone https://github.com/bosh-packages/golang-release $(CURDIR)/src/golang-release
-	@$(BOSH_CMD) vendor-package golang-1-linux ./src/golang-release
-
 
