@@ -60,7 +60,7 @@ endif
 endif
 
 build-blackbox: 
-	git submodule update --init --recursive
+	@$(GIT_CMD) submodule update --init --recursive
 	mkdir -p src/blackbox
 	GOPATH=$(CURDIR) GOOS=linux GOARCH=amd64 $(GO_CMD) build -o src/blackbox/blackbox-linux64 src/github.com/CrunchyData/blackbox/cmd/blackbox/main.go
 
