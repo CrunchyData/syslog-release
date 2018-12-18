@@ -1,7 +1,8 @@
-set -e
-source /var/vcap/packages/golang-1-linux/bosh/compile.env
+#!/bin/bash
+set -e -u
 
-mkdir ../src && cp -a * ../src && mv ../src ./src
-mkdir $BOSH_INSTALL_TARGET/bin
+PACKAGE='blackbox'
 
-go build -o $BOSH_INSTALL_TARGET/bin/blackbox src/github.com/cloudfoundry/blackbox/cmd/blackbox/main.go
+mkdir -p "${BOSH_INSTALL_TARGET}/bin"
+cp "${BOSH_COMPILE_TARGET}/${PACKAGE}/${PACKAGE}-linux64" "${BOSH_INSTALL_TARGET}/bin/${PACKAGE}"
+chmod +x "${BOSH_INSTALL_TARGET}/bin/${PACKAGE}"
